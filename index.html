@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Document</title>
+    <style>
+      body {
+        background-color: #f0f8ff; /* cor de fundo suave */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        flex-direction: column;
+        text-align: center;
+        font-family: Arial, sans-serif;
+      }
+
+      input, button {
+        font-size: 1rem;
+        padding: 0.5rem;
+        margin-top: 10px;
+        width: 250px;
+        max-width: 90vw;
+        box-sizing: border-box;
+      }
+
+      #resultado {
+        margin-top: 20px;
+        font-weight: bold;
+      }
+    </style>
+</head>
+<body>
+    <h1>COLOQUE SEU CPF</h1>
+    <input type="text" id="cpfinput" placeholder="Digite o cpf" />
+    <button onclick="enviarCPF()">Testar CPF</button>
+
+    <div id="resultado" style="margin-top: 20px; font-weight: bold;"></div>
+
+    <script>
+        async function enviarCPF() {
+            const cpf = document.getElementById('cpfinput').value;
+
+            const resposta = await fetch('/valida-cpf', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ cpf })
+            });
+
+            const dados = await resposta.json();
+            document.getElementById('resultado').innerText = dados.mensagem;
+        }
+    </script>
+</body>
+</html>
